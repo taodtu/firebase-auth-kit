@@ -9,12 +9,13 @@ import * as ROUTES from '../../constants/routes';
 const withAuthorization = condition => Component => {
  class WithAuthorization extends React.Component {
   componentDidMount() {
-   this.listener = this.props.firebase.auth.onAuthStateChanged(
+   this.listener = this.props.firebase.onAuthUserListener(
     authUser => {
      if (!condition(authUser)) {
       this.props.history.push(ROUTES.SIGN_IN);
      }
     },
+    () => this.props.history.push(ROUTES.SIGN_IN),
    );
   }
 
@@ -40,3 +41,4 @@ const withAuthorization = condition => Component => {
 };
 
 export default withAuthorization;
+
